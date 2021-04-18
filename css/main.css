@@ -1,0 +1,57 @@
+.navbar-dark .navbar-nav .active>.nav-link {
+    color: black;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+}
+
+.navbar .navbar-brand {
+    color: white;
+}
+
+.indexContainer {
+    width: 860px;
+    height: 540px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-top: -180px;
+    margin-left: -480px;
+}
+
+::selection {
+    background-color: green;
+}
+
+.table .table-striped {
+    border: 1px solid black;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid black;
+}
+
+
+
+.table {
+    background-color: #b5d1b5;
+    border-collapse: collapse;
+    color: #000;
+    font-size: 18px;
+}
+
+.table th {
+    background-color: green;
+    color: white;
+}
+
+.table td,
+.table th {
+    padding: 5px;
+    border: 0;
+    text-align: center;
+}
+
+.table td {
+    border-bottom: 1px solid black;
+}
