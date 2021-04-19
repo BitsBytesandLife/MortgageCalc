@@ -37,21 +37,21 @@ function calculateLoan() {
 
     //converts years to months
     let loanTerm = years * 12;
-
-    monthlyPayment = loanAmount * (loanRate / 12) / (1 - (1 + loanRate / 12) ** (0 - loanTerm));
+    monthlyPayment = loanAmount * (loanRate / 1200) / (1 - Math.pow((1 + loanRate / 1200), (-loanTerm)));
+    //monthlyPayment = loanAmount * (loanRate / 1200) / (1 - (1 + loanRate / 12) ** (0 - loanTerm));
     remainingBalance = loanAmount
 
     for (let i = 1; i <= loanTerm; i++) {
         interestPayment = (remainingBalance * (loanRate / 1200));
         principalPayment = monthlyPayment - interestPayment;
         totalInterest = totalInterest + (monthlyPayment - principalPayment);
-        remainingBalance -= monthlyPayment;
+        remainingBalance -= principalPayment;
         rate++;
-        addToArray(rate, monthlyPayment, principalPayment, interestPayment, totalInterest, remainingBalance);
+        addToArray(i, monthlyPayment, principalPayment, interestPayment, totalInterest, remainingBalance);
 
     }
 
-    displayInfo(payments, monthlyPayment, totalInterest)
+    displayInfo(payments, monthlyPayment, totalInterest, loanAmount)
 }
 
 
@@ -61,7 +61,7 @@ function addToArray(rate, monthlyPayment, principalPayment, interestPayment, tot
     obj["payment"] = monthlyPayment;
     obj["principal"] = principalPayment;
     obj["interest"] = interestPayment;
-    obj["totalInterest:"] = totalInterest;
+    obj["totalInterest"] = totalInterest;
     obj["balance"] = balance;
 
     payments.push(obj);
@@ -69,7 +69,7 @@ function addToArray(rate, monthlyPayment, principalPayment, interestPayment, tot
 }
 
 
-function displayInfo(payments, monthlyPayment, totalInterest) {
+function displayInfo(payments, monthlyPayment, totalInterest, loanAmount) {
 
     const template = document.getElementById("Data-template");
     const resultsBody = document.getElementById("resultsBody");
@@ -86,19 +86,23 @@ function displayInfo(payments, monthlyPayment, totalInterest) {
 
         dataRow.getElementById("month").textContent = payments[i].term;
         dataRow.getElementById("payment").textContent = (Math.round(Number(payments[i].payment) * 100) / 100).toFixed(2);
-        dataRow.getElementById("principal").textContent = (Math.round(payments[i].principal) * 100 / 100).toFixed(2);
-        dataRow.getElementById("interest").textContent = (Math.round(payments[i].interest) * 100 / 100).toFixed(2);
-        dataRow.getElementById("totalInterest").textContent = (Math.round(payments[i].interestPayment) * 100 / 100).toFixed(2);
-        dataRow.getElementById("balance").textContent = (Math.round(payments[i].balance) * 100 / 100).toFixed(2);
+
+        dataRow.getElementById("principal").textContent = (Math.round(payments[i].principal * 100) / 100).toFixed(2);
+
+        dataRow.getElementById("interest").textContent = (Math.round(payments[i].interest * 100) / 100).toFixed(2);
+
+        dataRow.getElementById("totalInterest").textContent = (Math.round(payments[i].totalInterest * 100) / 100).toFixed(2);
+
+        dataRow.getElementById("balance").textContent = (Math.round(payments[i].balance * 100) / 100).toFixed(2);
 
         resultsBody.appendChild(dataRow);
     }
 
 
     document.getElementById("monthlyPayment").innerHTML = "$" + (Math.round(monthlyPayment * 100) / 100).toFixed(2);
-    document.getElementById("totalPrincipal").innerHTML = "$" + (Math.round(monthlyPayment * 100) / 100).toFixed(2);
+    document.getElementById("totalPrincipal").innerHTML = "$" + (Math.round(loanAmount * 100) / 100).toFixed(2);
     document.getElementById("totalInterest").innerHTML = "$" + (Math.round(totalInterest * 100) / 100).toFixed(2);
-    document.getElementById("totalCost").innerHTML = "$" + (Math.round(monthlyPayment * 100) / 100).toFixed(2);
+    document.getElementById("totalCost").innerHTML = "$" + (Math.round((loanAmount + totalInterest) * 100) / 100).toFixed(2);
 
 
 }
