@@ -46,7 +46,7 @@ function calculateLoan() {
         principalPayment = monthlyPayment - interestPayment;
         totalInterest = totalInterest + (monthlyPayment - principalPayment);
         remainingBalance -= principalPayment;
-        rate++;
+        //rate++;
         addToArray(i, monthlyPayment, principalPayment, interestPayment, totalInterest, remainingBalance);
 
     }

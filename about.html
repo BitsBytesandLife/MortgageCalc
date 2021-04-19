@@ -10,9 +10,9 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="/css/tacocat.css">
+
     <link rel="stylesheet" href="/css/site.css">
-    <link rel="stylesheet" href="style.css">
+
     <!-- <link rel="stylesheet" href="/css/sample.css"> -->
 </head>
 
@@ -20,7 +20,7 @@
     <header>
         <!-- Fixed navbar -->
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-            <a class="navbar-brand" href="#">Loan Calculator</a>
+            <a class="navbar-brand disabled-link" href="#">FizzBuzz</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
                 aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -28,7 +28,7 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="index.html">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="app.html">The App</a>
@@ -40,8 +40,8 @@
                         <a class="nav-link" href="https://github.com/BitsBytesandLife/MortgageCalc"
                             target="_blank">GitHub</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="about.html">About Me</a>
+                    <li class="nav-item current">
+                        <a class="nav-link" href="about.html">About Me<span class="sr-only">(current)</span> </a>
                     </li>
                 </ul>
             </div>
@@ -50,36 +50,34 @@
 
     <!-- Begin page content -->
     <main role="main" class="container-fluid">
-        <br>
-        <br>
-        <br>
-        <div class="container text-center">
-            <div class="row">
-                <div class="col-lg-12 text-center">
-
-                    <div class="text-center">
-                        <img src="/img/LoanWord.jpg" class="rounded" alt="a cat eating two fish tacos" height="300px"
-                            width="300px">
-                    </div>
-
-                    <h1 class="mt-5">Loan Calculator</h1>
-                    <hr />
-                    <p>Caculate you payments with the easy loan calculator</p>
-
-                    <ul class="list-unstyled">
-                        <li>All you need is three values</li>
-                        <li>The amount of money loaned</li>
-                        <li>The time over which the loan will be repaid, in months (term) </li>
-                        <li>The percentage rate at which interest will accrue on the loan (rate)</li>
-                    </ul>
+        <br><br><br>
+        <div class="container-fuild text-center">
+            <div class="row text-center">
+                <div class="col">
+                    <img src="/img/bk1.jpeg" alt="a picture of handsome developer" height="230px" width="230px">
                 </div>
             </div>
-            <hr />
             <div class="row">
                 <div class="col">
-                    <img src="/img/badges.png" alt="JavaScript Logo" class="">
+                    <h3>About the developer</h3>
+                    <p>
+                        A passionate fullstack software developer with demonstrated success in the planning, design,
+                        development, and maintenance of various industries. Proven ability to lead and motivate
+                        high-performance teams, and learn and adapt new technologies and methodologies. Six and a half
+                        years
+                        work history of building software systems with improved functionality and productivity,
+                        consistently
+                        meeting critical requirements. I build full-stack web using the MVC design pattern, ASP.NET and
+                        backed with a Postgres database.
+                    </p>
+                    <p>
+                        If you want to learn more about my skill set check out <a href="http://fullstackbk.dev">my
+                            porfoliio</a>.
+                    </p>
+                    <p>
+                        Or you can e-mail directly <a href="mailto:fullstackbk@gmail.com">here</a>
+                    </p>
                 </div>
-
             </div>
         </div>
     </main>
