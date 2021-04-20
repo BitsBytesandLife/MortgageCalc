@@ -1,17 +1,16 @@
-let payments = [];
+let paymentDS = {
+    payments: [],
+    summary: {}
+};;
 
 function calculateLoan() {
 
-    payments = [];
-    //let loanAmount = 0;
     let term = 0;
     let interest = 0;
-    let monthlyPayment = 0;
     let totalInterest = 0;
     let remainingBalance = 0;
     let interestPayment = 0;
     let principalPayment = 0;
-    let monthlyPaymentSubPrincipalPayment = 0;
     let rate = 0;
     //let years = 0;
     // getting values from the user
@@ -25,30 +24,42 @@ function calculateLoan() {
     //converts years to months
     let loanTerm = years * 12;
     monthlyPayment = calcPayment(loanAmount, loanRate, loanTerm);
-    //monthlyPayment = loanAmount * (loanRate / 1200) / (1 - Math.pow((1 + loanRate / 1200), (-loanTerm)));
-    //monthlyPayment = loanAmount * (loanRate / 1200) / (1 - (1 + loanRate / 12) ** (0 - loanTerm));
     remainingBalance = loanAmount
 
     for (let i = 1; i <= loanTerm; i++) {
-        interestPayment = (remainingBalance * (loanRate / 1200));
+        interestPayment = calcInterest(remainingBalance, loanRate);
         principalPayment = monthlyPayment - interestPayment;
         totalInterest = totalInterest + (monthlyPayment - principalPayment);
         remainingBalance -= principalPayment;
-        //rate++;
-        addToArray(i, monthlyPayment, principalPayment, interestPayment, totalInterest, remainingBalance);
+        addPayment(i, monthlyPayment, principalPayment, interestPayment, totalInterest, remainingBalance);
     }
 
-    displayInfo(payments, monthlyPayment, totalInterest, loanAmount)
+
+    let summary = {
+        payment: monthlyPayment,
+        totalPrincipal: loanAmount,
+        totalInterest: totalInterest,
+        totalCost: (loanAmount + totalInterest)
+    };
+
+    paymentDS.summary = summary;
+
+
+    displayInfo(paymentDS, monthlyPayment, totalInterest, loanAmount)
 }
 
-
+//Calculate the payment for the loan
 function calcPayment(amount, rate, term) {
     return amount * (rate / 1200) / (1 - Math.pow((1 + rate / 1200), (-term)));
 }
 
+//calculate the interst for the current balance of the loan
+function calcInterest(balance, rate) {
+    return (balance * (rate / 1200));
+}
 
 
-function addToArray(rate, monthlyPayment, principalPayment, interestPayment, totalInterest, balance) {
+function addPayment(rate, monthlyPayment, principalPayment, interestPayment, totalInterest, balance) {
     let obj = {};
     obj["term"] = rate;
     obj["payment"] = monthlyPayment;
@@ -57,12 +68,12 @@ function addToArray(rate, monthlyPayment, principalPayment, interestPayment, tot
     obj["totalInterest"] = totalInterest;
     obj["balance"] = balance;
 
-    payments.push(obj);
+    paymentDS.payments.push(obj);
 
 }
 
 
-function displayInfo(payments, monthlyPayment, totalInterest, loanAmount) {
+function displayInfo(paymentDS, monthlyPayment, totalInterest, loanAmount) {
 
     const template = document.getElementById("Data-template");
     const resultsBody = document.getElementById("resultsBody");
@@ -70,40 +81,40 @@ function displayInfo(payments, monthlyPayment, totalInterest, loanAmount) {
     //clear the table
     resultsBody.innerHTML = "";
 
-    for (let i = 0; i < payments.length; i++) {
+    for (let i = 0; i < paymentDS.payments.length; i++) {
         const dataRow = document.importNode(template.content, true);
 
-        dataRow.getElementById("month").textContent = payments[i].term;
+        dataRow.getElementById("month").textContent = paymentDS.payments[i].term;
         //dataRow.getElementById("payment").textContent = (Math.round(Number(payments[i].payment) * 100) / 100).toFixed(2);
-        dataRow.getElementById("payment").textContent = payments[i].payment.toLocaleString(
+        dataRow.getElementById("payment").textContent = paymentDS.payments[i].payment.toLocaleString(
             'en-US', {
                 style: 'currency',
                 currency: 'USD',
             }
         );
 
-        dataRow.getElementById("principal").textContent = payments[i].principal.toLocaleString(
+        dataRow.getElementById("principal").textContent = paymentDS.payments[i].principal.toLocaleString(
             'en-US', {
                 style: 'currency',
                 currency: 'USD',
             }
         );
 
-        dataRow.getElementById("interest").textContent = payments[i].interest.toLocaleString(
+        dataRow.getElementById("interest").textContent = paymentDS.payments[i].interest.toLocaleString(
             'en-US', {
                 style: 'currency',
                 currency: 'USD',
             }
         );
 
-        dataRow.getElementById("totalInterest").textContent = payments[i].totalInterest.toLocaleString(
+        dataRow.getElementById("totalInterest").textContent = paymentDS.payments[i].totalInterest.toLocaleString(
             'en-US', {
                 style: 'currency',
                 currency: 'USD',
             }
         );
 
-        dataRow.getElementById("balance").textContent = payments[i].balance.toLocaleString(
+        dataRow.getElementById("balance").textContent = paymentDS.payments[i].balance.toLocaleString(
             'en-US', {
                 style: 'currency',
                 currency: 'USD',
@@ -114,28 +125,33 @@ function displayInfo(payments, monthlyPayment, totalInterest, loanAmount) {
     }
 
 
-    //document.getElementById("monthlyPayment").innerHTML = "$" + (Math.round(monthlyPayment * 100) / 100).toFixed(2);
-    document.getElementById("monthlyPayment").innerHTML = monthlyPayment.toLocaleString(
+    //total interest is in the last row of the payments array.
+    let displayTotalInterest = paymentDS.summary.totalInterest;
+    let displayPayment = paymentDS.summary.payment;
+    let displayLoanAmount = paymentDS.summary.totalPrincipal;
+    let displaytotalCost = paymentDS.summary.totalCost;
+
+    document.getElementById("monthlyPayment").innerHTML = displayPayment.toLocaleString(
         'en-US', {
             style: 'currency',
             currency: 'USD',
         }
     );
     //   document.getElementById("totalPrincipal").innerHTML = "$" + (Math.round(loanAmount * 100) / 100).toFixed(2);
-    document.getElementById("totalPrincipal").innerHTML = loanAmount.toLocaleString(
+    document.getElementById("totalPrincipal").innerHTML = displayLoanAmount.toLocaleString(
         'en-US', {
             style: 'currency',
             currency: 'USD',
         }
     );
-    document.getElementById("totalInterest").innerHTML = totalInterest.toLocaleString(
+    document.getElementById("totalInterest").innerHTML = displayTotalInterest.toLocaleString(
         'en-US', {
             style: 'currency',
             currency: 'USD',
         }
     );
 
-    document.getElementById("totalCost").innerHTML = (loanAmount + totalInterest).toLocaleString(
+    document.getElementById("totalCost").innerHTML = displaytotalCost.toLocaleString(
         'en-US', {
             style: 'currency',
             currency: 'USD',
