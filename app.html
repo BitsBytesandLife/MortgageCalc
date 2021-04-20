@@ -13,9 +13,9 @@
 
     <link rel="stylesheet" href="/css/site.css">
     <!-- <link rel="stylesheet" href="/css/sample.css"> -->
-    <link rel="stylesheet" href="/css/main.css">
+    <!-- <link rel="stylesheet" href="/css/main.css"> -->
     <link rel="stylesheet" href="/css/loanCalc.css">
-    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+
 
 </head>
 
@@ -57,7 +57,7 @@
             <br><br><br>
 
             <div class="container-fluid">
-                <div class="dogContainer">
+                <div class="">
                     <div class="row">
                         <!--INPUTS COLUMN-->
                         <div class="col-4 loanCalc_inputs">
@@ -88,13 +88,13 @@
                                 </div>
                             </class>
                             <div class="row offset-7 mt-4">
-                                <button class="btn" type="submit" style="background-color: blue; color:white;"
+                                <button class="btn btn-success" type="submit"
                                     onclick="calculateLoan()">Calculate</button>
                             </div>
                         </div>
                         <!-- </div> -->
 
-                        <div class="col" style="border-style:groove; border-width: 1px; border-radius:4px;">
+                        <div class="col p-1" style="border-style:groove; border-width: 1px; border-radius:4px;">
 
                             <div class="row justify-content-center mt-1">
                                 <h3>Your Monthly Payments</h3>
@@ -201,6 +201,8 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
     </script>
     <script src="/js/site.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    <script src="/js/swal.js"></script>
 
     <!-- button Events -->
 

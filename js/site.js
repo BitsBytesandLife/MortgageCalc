@@ -1,20 +1,18 @@
-//This will be array of Objets
-// obj = {
-//     month: value,
-//     paymet: vaule,
-//     interest: value,
-//     totalInterest: value,
-//     balance: value,
-//  } 
-
 let payments = [];
 
-
-
 function calculateLoan() {
-    //alert("I'm here!!!")
 
-    //
+    let isValid = validateForm();
+    if (!isValid) {
+        // Add a sweet alert ... https://sweetalert2.github.io/
+        Swal.fire(
+            'Error',
+            'Please enter a value greater than zero in all fields',
+            'error'
+        );
+        return false;
+    }
+
     payments = [];
     //let loanAmount = 0;
     let term = 0;
@@ -48,7 +46,6 @@ function calculateLoan() {
         remainingBalance -= principalPayment;
         //rate++;
         addToArray(i, monthlyPayment, principalPayment, interestPayment, totalInterest, remainingBalance);
-
     }
 
     displayInfo(payments, monthlyPayment, totalInterest, loanAmount)
@@ -80,27 +77,61 @@ function displayInfo(payments, monthlyPayment, totalInterest, loanAmount) {
     for (let i = 0; i < payments.length; i++) {
         const dataRow = document.importNode(template.content, true);
 
-
-        //let testValue1 = payments.term;
-        //let testValue2 = payments.payment;
-
         dataRow.getElementById("month").textContent = payments[i].term;
-        dataRow.getElementById("payment").textContent = (Math.round(Number(payments[i].payment) * 100) / 100).toFixed(2);
+        //dataRow.getElementById("payment").textContent = (Math.round(Number(payments[i].payment) * 100) / 100).toFixed(2);
+        dataRow.getElementById("payment").textContent = payments[i].payment.toLocaleString(
+            'en-US', {
+                style: 'currency',
+                currency: 'USD',
+            }
+        );
 
-        dataRow.getElementById("principal").textContent = (Math.round(payments[i].principal * 100) / 100).toFixed(2);
+        dataRow.getElementById("principal").textContent = payments[i].principal.toLocaleString(
+            'en-US', {
+                style: 'currency',
+                currency: 'USD',
+            }
+        );
 
-        dataRow.getElementById("interest").textContent = (Math.round(payments[i].interest * 100) / 100).toFixed(2);
+        dataRow.getElementById("interest").textContent = payments[i].interest.toLocaleString(
+            'en-US', {
+                style: 'currency',
+                currency: 'USD',
+            }
+        );
 
-        dataRow.getElementById("totalInterest").textContent = (Math.round(payments[i].totalInterest * 100) / 100).toFixed(2);
+        dataRow.getElementById("totalInterest").textContent = payments[i].totalInterest.toLocaleString(
+            'en-US', {
+                style: 'currency',
+                currency: 'USD',
+            }
+        );
 
-        dataRow.getElementById("balance").textContent = (Math.round(payments[i].balance * 100) / 100).toFixed(2);
+        dataRow.getElementById("balance").textContent = payments[i].balance.toLocaleString(
+            'en-US', {
+                style: 'currency',
+                currency: 'USD',
+            }
+        );
 
         resultsBody.appendChild(dataRow);
     }
 
 
-    document.getElementById("monthlyPayment").innerHTML = "$" + (Math.round(monthlyPayment * 100) / 100).toFixed(2);
-    document.getElementById("totalPrincipal").innerHTML = "$" + (Math.round(loanAmount * 100) / 100).toFixed(2);
+    //document.getElementById("monthlyPayment").innerHTML = "$" + (Math.round(monthlyPayment * 100) / 100).toFixed(2);
+    document.getElementById("monthlyPayment").innerHTML = monthlyPayment.toLocaleString(
+        'en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }
+    );
+    //   document.getElementById("totalPrincipal").innerHTML = "$" + (Math.round(loanAmount * 100) / 100).toFixed(2);
+    document.getElementById("totalPrincipal").innerHTML = loanAmount.toLocaleString(
+        'en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }
+    );
     document.getElementById("totalInterest").innerHTML = "$" + (Math.round(totalInterest * 100) / 100).toFixed(2);
     document.getElementById("totalCost").innerHTML = "$" + (Math.round((loanAmount + totalInterest) * 100) / 100).toFixed(2);
 
@@ -110,7 +141,13 @@ function displayInfo(payments, monthlyPayment, totalInterest, loanAmount) {
 
 
 
-function validateUserInfo() {
+// Form Validation - Is every field a number greater than 0?
+function validateForm() {
+    let loanAmount = +document.getElementById("loanAmount").value;
+    let years = +document.getElementById("years").value;
+    let loanRate = +document.getElementById("interestRate").value;
 
+    let isValid = [loanAmount, years, loanRate].every((field) => field > 0);
 
+    return isValid;
 }
