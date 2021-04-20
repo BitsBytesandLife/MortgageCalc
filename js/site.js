@@ -162,8 +162,6 @@ function displayInfo(paymentDS, monthlyPayment, totalInterest, loanAmount) {
 }
 
 
-
-
 // Form Validation - Is every field a number greater than 0?
 function validateForm() {
     let loanAmount = +document.getElementById("loanAmount").value;
