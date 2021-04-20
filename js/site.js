@@ -24,7 +24,8 @@ function calculateLoan() {
 
     //converts years to months
     let loanTerm = years * 12;
-    monthlyPayment = loanAmount * (loanRate / 1200) / (1 - Math.pow((1 + loanRate / 1200), (-loanTerm)));
+    monthlyPayment = calcPayment(loanAmount, loanRate, loanTerm);
+    //monthlyPayment = loanAmount * (loanRate / 1200) / (1 - Math.pow((1 + loanRate / 1200), (-loanTerm)));
     //monthlyPayment = loanAmount * (loanRate / 1200) / (1 - (1 + loanRate / 12) ** (0 - loanTerm));
     remainingBalance = loanAmount
 
@@ -39,6 +40,12 @@ function calculateLoan() {
 
     displayInfo(payments, monthlyPayment, totalInterest, loanAmount)
 }
+
+
+function calcPayment(amount, rate, term) {
+    return amount * (rate / 1200) / (1 - Math.pow((1 + rate / 1200), (-term)));
+}
+
 
 
 function addToArray(rate, monthlyPayment, principalPayment, interestPayment, totalInterest, balance) {
