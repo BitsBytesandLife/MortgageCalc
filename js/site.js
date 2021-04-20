@@ -2,17 +2,6 @@ let payments = [];
 
 function calculateLoan() {
 
-    let isValid = validateForm();
-    if (!isValid) {
-        // Add a sweet alert ... https://sweetalert2.github.io/
-        Swal.fire(
-            'Error',
-            'Please enter a value greater than zero in all fields',
-            'error'
-        );
-        return false;
-    }
-
     payments = [];
     //let loanAmount = 0;
     let term = 0;
@@ -132,8 +121,19 @@ function displayInfo(payments, monthlyPayment, totalInterest, loanAmount) {
             currency: 'USD',
         }
     );
-    document.getElementById("totalInterest").innerHTML = "$" + (Math.round(totalInterest * 100) / 100).toFixed(2);
-    document.getElementById("totalCost").innerHTML = "$" + (Math.round((loanAmount + totalInterest) * 100) / 100).toFixed(2);
+    document.getElementById("totalInterest").innerHTML = totalInterest.toLocaleString(
+        'en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }
+    );
+
+    document.getElementById("totalCost").innerHTML = (loanAmount + totalInterest).toLocaleString(
+        'en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }
+    );
 
 
 }
